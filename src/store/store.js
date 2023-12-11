@@ -54,5 +54,8 @@ export const createAppStore = (props) => {
         }
       }
     },
+    winnerCreator: function (winner) {
+      this.winner = winner
+    }
   };
 };

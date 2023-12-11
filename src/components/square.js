@@ -9,12 +9,12 @@ export const Square = ({number}) => {
 
   const appStore = useAppStore();
   useEffect (() => autorun(() => {
-    checkWinner(appStore.squares)
+    console.log(checkWinner(appStore.squares))
+    appStore.winnerCreator(checkWinner(appStore.squares)[0]) 
   }, [appStore]))
   const handleClick = (number) => {
     if (!appStore.winner && !appStore.getSquare(number)) {
       appStore.playCreator(number);
-      appStore.winCreator(number);
     }
   };
     //Check if current square number is part of winningConfig
