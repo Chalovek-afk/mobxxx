@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import Board from "./components/board";
+import React from "react";
+import "./App.css";
+import checkWinner from "./utils/checkWinner";
+import { observer } from "mobx-react";
+import { AppStoreProvider, useAppStore } from "./store/AppStoreProvider";
 
-function App() {
+export const Game = observer(() => {
+  const appStore = useAppStore();
+  console.log(appStore.winningConfig);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {appStore.winner ? (
+        <h2>Winner is {appStore.winner}</h2>
+      ) : (
+        <h2>{`Next Move ${appStore.isXPlaying ? "X" : "O"}`}</h2>
+      )}
+      <Board />
+      <button className="reset-button" onClick={appStore.reset}>
+        Reset
+      </button>
     </div>
   );
-}
+});
 
-export default App;
+export default function () {
+  return (
+    <AppStoreProvider>
+      <Game />
+    </AppStoreProvider>
+  );
+}
